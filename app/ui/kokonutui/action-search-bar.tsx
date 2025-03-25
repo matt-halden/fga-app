@@ -147,11 +147,16 @@ function ActionSearchBar({ actions = allActions }: { actions?: Action[] }) {
     setIsFocused(true)
   }
 
+  // Send user to specific pages based on the selected dropdown
   const handleActionSelect = (action: Action) => {
     setSelectedAction(action)
     
     if (action.id === "2") {
       router.push("/dashboard")
+    }
+
+    if (action.id === "3") {
+      router.push("/api/auth/login?returnTo=/dashboard")
     }
     
     setIsFocused(false)

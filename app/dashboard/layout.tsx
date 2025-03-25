@@ -2,8 +2,13 @@ import Link from 'next/link';
 import { ReactNode } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/dashboard/avatar';
 import SideNav from '@/app/ui/dashboard/sidenav';
+import { getSession } from '@auth0/nextjs-auth0';
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
+export default async function DashboardLayout({ children }: { children: ReactNode }) {
+  // Get session but don't require it for the layout
+  const session = await getSession();
+  const user = session?.user;
+  
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <SideNav />
@@ -26,10 +31,19 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 Help
                 </a>
             </div>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          {user ? (
+            <Avatar>
+              <AvatarImage src={user.picture || "https://github.com/shadcn.png"} alt={user.name || "@user"} />
+              <AvatarFallback>{user.name?.substring(0, 2).toUpperCase() || "UN"}</AvatarFallback>
+            </Avatar>
+          ) : (
+            <a 
+              href="/api/auth/login" 
+              className="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              Sign In
+            </a>
+          )}
         </header>
 
         {/* Page content */}

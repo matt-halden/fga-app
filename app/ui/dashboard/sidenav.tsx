@@ -27,7 +27,8 @@ export default function SideNav() {
         <div className="p-4">
           <Button className="w-full flex items-center justify-center font-mono bg-transparent border border-input">
             <LogOut className="mr-2 h-4 w-4" />
-            Logout
+            {/* Logout button using Auth0 */}
+            <a href="/api/auth/logout">Logout</a>
           </Button>
         </div>
       </div>
