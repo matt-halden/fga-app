@@ -1,4 +1,5 @@
 import { AuthCheck } from '@/app/components/auth-check';
+import { Protected } from '@/app/ui/dashboard/protected';
 
 export default function SettingsPage() {
   return (
@@ -34,6 +35,24 @@ export default function SettingsPage() {
               Manage your account and security settings.
             </p>
           </div>
+          <Protected 
+            object="doc:admin-settings" 
+            relation="owner"
+            fallback={null} // Hide completely if not an owner/admin
+          >
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-medium mb-2">Admin Settings</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Manage your Admin preferences.
+              </p>
+            </div>
+          </Protected>
+          {/* <div className="p-4 border rounded-lg">
+            <h3 className="font-medium mb-2">Admin Settings</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Manage your Admin preferences.
+            </p>
+          </div> */}
         </div>
       </div>
     </AuthCheck>
